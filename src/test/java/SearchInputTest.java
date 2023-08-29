@@ -16,14 +16,14 @@ import static org.openqa.selenium.By.xpath;
 
 public class SearchInputTest {
 
-    private static WebDriver driver = new ChromeDriver();
+    private final static WebDriver driver = new ChromeDriver();
     static String testValue;
     private int resultSearch;
     /*   *****************LOKATORS***************
      **********************************************
      */
-    private String SEARCH_INPUT = "//body/div[@id='root']/div[1]/div[1]/div[1]/form[1]/div[1]/div[1]/div[1]/input[1]";
-    private String ERROR_FOUND_ITEMS = "//body/div[@id='root']/div[1]/div[1]/div[3]/div[2]/div[2]/div[2]";
+    private final String SEARCH_INPUT = "//body/div[@id='root']/div[1]/div[1]/div[1]/form[1]/div[1]/div[1]/div[1]/input[1]";
+    private final String ERROR_FOUND_ITEMS = "//body/div[@id='root']/div[1]/div[1]/div[3]/div[2]/div[2]/div[2]";
     public static final String OZON_COUNT = "//*[@id=\"root\"]/div/div/div[3]/div[1]/fieldset/div/label[1]/span[2]/span";
     public static final String ALI_COUNT = "//*[@id=\"root\"]/div/div/div[3]/div[1]/fieldset/div/label[2]/span[2]/span";
     public static final String WILDBERIES_COUNT = "//*[@id=\"root\"]/div/div/div[3]/div[1]/fieldset/div/label[3]/span[2]/span";
@@ -86,7 +86,7 @@ public class SearchInputTest {
         WebElement productText = driver.findElement(By.xpath(value));
        String marketSearch = productText.getAttribute("textContent");
         System.out.println(marketSearch);
-        assertNotEquals("0 шт", marketSearch,value);
+        assertNotEquals("0 шт", marketSearch,"нет в маркете + value");
     }
     @AfterAll
     public static void tearDown() {
