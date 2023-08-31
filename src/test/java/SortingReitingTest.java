@@ -11,6 +11,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SortingReitingTest {
     private final static WebDriver driver = new ChromeDriver();
@@ -49,40 +53,39 @@ public class SortingReitingTest {
         @DisplayName("Проверка сортировки по брендам")
        void sortBrendItem() throws InterruptedException {
             driver.get(mainPage);
-
-
             driver.findElement(By.xpath(KETTLER_POP_MAIN)).click();
-
-
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-
             wait.until(ExpectedConditions.elementToBeClickable
                     (By.cssSelector(BRAND_SORT_BUTTON_FIRST)));
             String brand1 = driver.findElement
                     (By.cssSelector(BRAND_SORT_BUTTON_FIRST)).getText();
             System.out.println(brand1);
             driver.findElement(By.cssSelector(BRAND_SORT_BUTTON_FIRST)).click();
-
-            Thread.sleep(1000);
-
-
+            Thread.sleep(1000); //здесь не всегда работает
             List<WebElement> productCards = driver.findElements
                     (By.cssSelector(CARDS_TEXT_VALUE));
-
 
             WebElement firstProductCard = productCards.get(0);
             String first = firstProductCard.getText();
             System.out.println(first);
-
-
+            Pattern pattern = Pattern.compile(brand1,
+                    Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(first);
+            assertTrue (matcher.find(), brand1);
+            /*if (matcher.find()) {
+                System.out.println("Слово " + brand1 + " найдено в строке");
+            } else {
+                System.out.println("Слово " + brand1 + " не найдено в строке");
+            }*/
             WebElement lastProductCard = productCards.get(productCards.size() - 1);
             String last = lastProductCard.getText();
             System.out.println(last);
+
+
         }
-   /* @AfterAll
+    @AfterAll
     public static void tearDown() {
         driver.quit();
-    }*/
+    }
 }
 
